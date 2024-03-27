@@ -1,4 +1,5 @@
-# MIT6.0002 **Introduction To Computational Thinking And Data Science**
+# MIT6.0002 
+**Introduction To Computational Thinking And Data Science**
 
 Each folder consists of files from course sessions (i.e. analysed/commented lecture scripts, problems and solutions).
 
