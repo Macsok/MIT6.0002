@@ -29,7 +29,7 @@ def load_cows(filename):
     with open(filename, 'r') as file:
         for line in file:
             vals = line.split(sep=',')
-            cows[vals[0]] = cows[1]
+            cows[vals[0]] = vals[1].split('\n')[0]
     return cows
 
 # Problem 2
@@ -58,21 +58,30 @@ def greedy_cow_transport(cows,limit=10):
     # TODO: Your code here
     #create sorted dict. using lambda expr. as key function, element is a item from dictionary
     #element[0] - name, elemnet[1] - weight
-    sorted_cows = {key : val for key, val in sorted(cows.items(), lambda element: element[1], reverse=True)}
+    #sort from the heaviest to lightest
+    sorted_cows = {key : val for key, val in sorted(cows.items(), key=lambda element: element[1], reverse=True)}
 
     course = []
     whole_plan = []
     load = 0
-    for key in sorted_cows.keys():
-        #curent load + next cow
-        if load + sorted_cows[key] <= limit:
-            course.append(key)
-            load += sorted_cows[key]
-        else:
-            #append to plan and erase current load
-            whole_plan.append(course)
-            course.clear()
-            load = 0
+    
+    for i in range(len(sorted_cows)):
+        for add in sorted_cows.keys():
+            #curent load + next cow
+            if load + int(sorted_cows[add]) <= limit:
+                course.append(add)
+                load += int(sorted_cows[add])
+            else:
+                #append to plan and erase current load
+                whole_plan.append(course)
+                course = []
+                load = 0
+                #braek adding
+                break  
+        for el in whole_plan[-1]:
+            try: del sorted_cows[el]
+            except: pass
+
     return whole_plan
 
 # Problem 3
@@ -98,7 +107,28 @@ def brute_force_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    cow_set = set(cows)
+    partitions = get_partitions(cow_set)
+    #assume worst is the best
+    best = len(cows)
+    out = []
+    for cows_part in partitions:
+        deny = False
+        for trip in cows_part:
+            if deny: break
+            weight = 0
+            #sum weights
+            for cow in trip:
+                if deny: break
+                weight += int(cows[cow])
+                #deny a whole partition
+                if weight > limit: deny = True
+
+        if not deny and len(cows_part) < best:
+            best = len(cows_part)
+            out = cows_part
+    return out
+
         
 # Problem 4
 def compare_cow_transport_algorithms():
@@ -115,4 +145,30 @@ def compare_cow_transport_algorithms():
     Does not return anything.
     """
     # TODO: Your code here
-    pass
+    cows = load_cows('ps1_cow_data_2.txt')
+
+    #test greedy
+    start = time.time()
+    greedy = greedy_cow_transport(cows)
+    stop = time.time()  
+    greedy_time = stop - start
+
+    #test brute force
+    start = time.time()
+    brute = brute_force_cow_transport(cows)
+    stop = time.time()
+    brute_time = stop - start
+
+    print(f"""
+Greedy Algorithm:
+    time: {greedy_time}
+    trips: {len(greedy)}
+    transports: {greedy}
+
+Brute Force Algorithm:
+    time: {brute_time}
+    trips: {len(brute)}
+    transports: {brute}
+    """)
+    
+compare_cow_transport_algorithms()
