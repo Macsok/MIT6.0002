@@ -7,7 +7,8 @@ Link to the course: https://ocw.mit.edu/courses/6-0002-introduction-to-computati
 
 # Syllabus
 1. Introduction and Optimization Problems (Knapsack problem, greedy algorithms, brute force algorithm)
-2. Optimization Problems (binary search tree, dynamic programming - on Fibonacci series example) 
+2. Optimization Problems (binary search tree, dynamic programming - on Fibonacci series example)
+3. ...
 
 # Updates with date stamps
 - 23.03.2024 Lecture 1, solving problem 1a
