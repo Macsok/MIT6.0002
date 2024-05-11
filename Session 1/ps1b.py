@@ -22,8 +22,15 @@ def dp_make_weight(egg_weights, target_weight, memo = {}):
     
     Returns: int, smallest number of eggs needed to make target weight
     """
-    # TODO: Your code here
-    pass
+    
+    # idea: add as many largest eggs as possible then remove this type of egg and run function again
+
+    # base of the recursion
+    if egg_weights == (): return 0
+    if (x := target_weight // egg_weights[-1]):
+        return x + dp_make_weight(egg_weights[:-1], target_weight - (x * egg_weights[-1]))
+    else:
+        return dp_make_weight(egg_weights[:-1], target_weight)
 
 # EXAMPLE TESTING CODE, feel free to add more if you'd like
 if __name__ == '__main__':
