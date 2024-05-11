@@ -14,3 +14,4 @@ Link to the course: https://ocw.mit.edu/courses/6-0002-introduction-to-computati
 - 23.03.2024 Lecture 1, solving problem 1a
 - 27.03.2024 Solved problem 1a
 - 07.04.2024 Lecture 2, analizing code
+- 11.05.2024 Solved problem 1b
